@@ -1,7 +1,7 @@
 (defun reduce (f x)
 	( cond ((null? x) nil)
-		((null? (tail x)) (first x))
-		(T (funcall f (first x) (reduce f (tail x))))
+		((null? (tail x)) (myfirst x))
+		(T (funcall f (myfirst x) (reduce f (tail x))))
 	)
 )
 
@@ -15,7 +15,7 @@
 (defun apply-to-all1 (f x y)
 	(cond ((null? y) nil)
 		((atom? y) (error "apply-to-all1: 2nd argument must be a list"))
-		(T (appendl (funcall f x (first y)) (apply-to-all1 f x (tail y))))
+		(T (appendl (funcall f x (myfirst y)) (apply-to-all1 f x (tail y))))
 
 	)
 )
@@ -27,8 +27,8 @@
 		  ((atom? x) (error "apply-to-all2: Given-One of the argument as an atom; Expected-Both arguments must be null or non-empty lists with equal lengths"))
 		  ((atom? y) (error "apply-to-all2: Given-One of the argument as an atom; Expected-Both arguments must be null or non-empty lists with equal lengths"))
 		  ((not (equal (length x) (length y))) (error "apply-to-all2: Given: Two lists of unequal lengths; Expected-Two lists of equal lengths "))
-		  ((null? (tail x)) (list (funcall f (first x) (first y))))
-		  (T (appendl (funcall f (first x) (first y)) (apply-to-all2 f (tail x) (tail y))))
+		  ((null? (tail x)) (list (funcall f (myfirst x) (myfirst y))))
+		  (T (appendl (funcall f (myfirst x) (myfirst y)) (apply-to-all2 f (tail x) (tail y))))
 	)
 )
 
@@ -36,8 +36,8 @@
 (defun construction (x y)
 	(cond ((null? x) nil)
 		  ((atom? x) (error "construction: Given- First argument as an atom; Expected-First argument to be a list of functions"))
-		  ((null? (tail x)) (list (funcall (first x) y)))
-		  (T (appendl (funcall (first x) y) (construction (tail x) y)))
+		  ((null? (tail x)) (list (funcall (myfirst x) y)))
+		  (T (appendl (funcall (myfirst x) y) (construction (tail x) y)))
 	)
 )
 
