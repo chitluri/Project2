@@ -1,7 +1,7 @@
-(defun reduce (f x)
-	( cond ((null? x) nil)
+(defun myreduce (f x)
+	( cond ((null? x) (error "myreduce: Given-Second argument is nil; Expected-Second argument must be a list of atleast one object"))
 		((null? (tail x)) (myfirst x))
-		(T (funcall f (myfirst x) (reduce f (tail x))))
+		(T (funcall f (myfirst x) (myreduce f (tail x))))
 	)
 )
 
@@ -41,4 +41,4 @@
 	)
 )
 
-(defun constant (x y)	(cond (T x)))
+(defun constant (x y) x)

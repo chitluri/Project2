@@ -16,31 +16,27 @@
 
 
 (defun myfirst (x)
-	( cond ((null? x) ( error "first: The given arg is null and the expected arg must be a non-empty list"))
-		((atom? x) (error "first: The given arg is atom and the expected arg must be a non-empty list"))
+	( cond ((atom? x) ( error "myfirst: Given-Argument is an or a nil; Expected-Argument must be a non-empty list"))
 		(T (car x))
 	)
 )
 
 
 (defun mylast (x)
-	( cond ((null? x) ( error "last The given arg is null and the expected arg must be a non-empty list"))
-		((atom? x) ( error "last: The given arg is atom and the expected arg must be a non-empty list"))
+	( cond ((atom? x) ( error "mylast: Given-Argument is an or a nil; Expected-Argument must be a non-empty list"))
 		(T (car (reverse x)))
 	)
 )
 
 
 (defun tail (x)
-	(cond ((null? x) ( error "tail: The given arg is null and the expected arg must be a non-empty list"))
-		((atom? x) (error "tail: The given arg is atom and the expected arg must be a non-empty list"))
+	(cond ((atom? x) ( error "tail: Given-Argument is an atom or a nil; Expected-Argument must be a non-empty list"))
 	 	(T (cdr x))
 	)
 )
 
 (defun head (x)
-	(cond ((null? x) ( error "head: The given arg is null and the expected arg must be a non-empty list"))
-		((atom? x) (error "head: The given arg is atom and the expected arg must be a non-empty list"))
+	(cond	((atom? x) (error "head: Given-Argument is an atom or a nil; Expected-Argument must be a non-empty list"))
 	 	(T (reverse (tail ( reverse x))))
 	)
 )
@@ -54,7 +50,7 @@
 
 (defun appendr (x y)
         (cond ((null? x) (list y))
-              ((atom? x) (error "appendl: Given-Second argument is an atom; Expected- Second arg must be a list"))
-              (T (reverse (cons y (reverse x))))
+              ((atom? x) (error "appendr: Given-Second argument is an atom; Expected- Second arg must be a list"))
+              (T (reverse (appendl y (reverse x))))
         )
 )
