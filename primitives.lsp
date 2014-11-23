@@ -59,7 +59,7 @@
 
 (defun appendr (x y)
         (cond ((null? x) (list y))
-              ((atom? x) (error "appendr: Given-Second argument is an atom; Expected- Second arg must be a list"))
+              ((atom? x) (error "appendr: Given-First argument is an atom; Expected- First arg must be a list"))
               (T (reverse (appendl y (reverse x))))
         )
 )
