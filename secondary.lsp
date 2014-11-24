@@ -1,0 +1,7 @@
+(defun andall (x)
+  ( cond ((atom? x) (error "andall: Given-Argument is an atom or empty list; Expected-Arguemnt must be a non-empty list"))
+         ((equal? T (myfirst x)) (myreduce equal? x))
+         ((equal? NIL (myfirst x)) NIL)
+         (T NIL)
+   )
+)
