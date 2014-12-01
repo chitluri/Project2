@@ -56,13 +56,6 @@
    )
 )
 
-(defun genZeroVect (n)
-    (cond ((not (integer? n)) (error "genZeroVect: argument must be an non-negative integer"))
-          ((equal? n 0) nil)
-          ((not (positive? n)) (error "genZeroVect: argument must be a non-negative integer"))
-          (T (appendr (genZeroVect (- n 1) 0))))
-)
-
 
 
 (defun zero (n) 
@@ -70,5 +63,14 @@
         ((equal? n 1) (list (list 0)))
         ((not (> n 0)) (error "zero: argument must be a non-negative integer"))
         (T (apply-to-all1 'appendl '0 (appendl (myfirst (zero (- n 1))) (zero (- n 1)))))
+   )
+)
+
+
+(defun id (n) 
+  (cond ((not (integer? n)) (error "zero: argument must be an non-negative integer"))
+        ((equal? n 1) (list (list 1)))
+        ((not (> n 0)) (error "zero: argument must be a non-negative integer"))
+        (T (appendr (apply-to-all 'reverse (apply-to-all1 'appendl '0 (reverse (ID (- n 1))))) (appendl '0 (reverse (myfirst (ID (- n 1)))))))
    )
 )
