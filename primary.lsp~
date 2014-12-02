@@ -43,7 +43,7 @@
 
 
 (defun matrix? (x)
-  (cond ((null? x) nil)
+  (cond ((null? x) T)
         ((list? x) (and (and-all (funcall 'apply-to-all 'vector? x)) (equal-all (funcall 'apply-to-all 'length x))))
         (T nil)
    )
@@ -86,7 +86,7 @@
 
 
 (defun dot (x y)
-  (cond ((and (and (vector? x) (vector? y)) (eq (length x) (length y))) (apply-to-all2 '* x y))    ;;((or (not (vector? x)) (not (vector? y))) (error "dot: Given Arguments are not vectors; Expected-Arguments must be vectors"))
+  (cond ((and (and (vector? x) (vector? y)) (eq (length x) (length y))) (myreduce '+ (apply-to-all2 '* x y)))    ;;((or (not (vector? x)) (not (vector? y))) (error "dot: Given Arguments are not vectors; Expected-Arguments must be vectors"))
         (T (error "dot: Given-Arguments are not vectors of same length; Expected-Arguments must be vectors of same length"))
    )
 )
@@ -98,6 +98,15 @@
         ((or (not (matrix? x)) (not (matrix? y))) (error "mplus: Given-Atleast one argument is not a matrix; Expected-Two Matrices of same shape"))
         ((not (and-all (apply-to-all2 'eq (shape x) (shape y)))) (error "mplus: Given-Arguments are matrices of different shapes; Expected-Two Matrices of same shape"))
         (T (appendl (apply-to-all2 '+ (myfirst x) (myfirst y)) (mplus (tail x) (tail y))))
+   )
+)
+
+
+(defun mtimes (x y) 
+  (cond  ((null? x) nil)
+         ((or (not (matrix? x)) (not (matrix? y))) (error "mtimes: Given-Atleast one argument is not a matrix; Expected-Two Matrices of same shape"))
+         ((not (eq (mylast (shape x)) (myfirst (shape y)))) (error "mtimes: Given-Arguments are matrices of incompatible shapes; Expected-Two Matrices of compatable shape"))
+         (T (appendl (apply-to-all1 'dot (myfirst x) (transpose y)) (mtimes (tail x) y)))
    )
 )
 

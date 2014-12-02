@@ -102,11 +102,36 @@
 )
 
 
+(defun mminus (x y)
+  (cond ((null? x) nil)
+        ((or (not (matrix? x)) (not (matrix? y))) (error "mplus: Given-Atleast one argument is not a matrix; Expected-Two Matrices of same shape"))
+        ((not (and-all (apply-to-all2 'eq (shape x) (shape y)))) (error "mplus: Given-Arguments are matrices of different shapes; Expected-Two Matrices of same shape"))
+        (T (appendl (apply-to-all2 '- (myfirst x) (myfirst y)) (mminus (tail x) (tail y))))
+   )
+)
+
+
+(defun square? (x) 
+  (cond ((null? x) T)
+        ((not (matrix? x)) (error "square:Given-Argument is not a matrix; Expected-Argument must be a matrix"))
+        (T (equal-all (shape x)))
+   )
+)
+
+
 (defun mtimes (x y) 
   (cond  ((null? x) nil)
          ((or (not (matrix? x)) (not (matrix? y))) (error "mtimes: Given-Atleast one argument is not a matrix; Expected-Two Matrices of same shape"))
          ((not (eq (mylast (shape x)) (myfirst (shape y)))) (error "mtimes: Given-Arguments are matrices of incompatible shapes; Expected-Two Matrices of compatable shape"))
          (T (appendl (apply-to-all1 'dot (myfirst x) (transpose y)) (mtimes (tail x) y)))
+   )
+)
+
+(defun btimes (x y)
+  (cond ((or (not (matrix? x)) (not (matrix? y))) (error "btimes: Given-Atleast one argument is not a matrix; Expected-Two square Matrices of same size"))
+        ((or (not (square? x)) (not (square? y))) (error "btimes: Given-Atleast one argument is not a square matrix; Expected-Two square Matrices of same size"))
+        ((not (and-all (apply-to-all2 'eq (shape x) (shape y)))) (error "btimes: Given-Square Matrices are not of same size; Expected-Two square Matrices of same size"))
+        (T (mminus (mtimes x y) (mtimes y x)))
    )
 )
 
