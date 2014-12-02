@@ -92,10 +92,13 @@
 )
 
 
+
 (defun mplus (x y)
-  (cond ((or (not (matrix? x)) (not (matrix? y))) (error "mplus: Given-Atleast one argument is not a matrix; Expected-Two Matrices of same shape"))
+  (cond ((null? x) nil)
+        ((or (not (matrix? x)) (not (matrix? y))) (error "mplus: Given-Atleast one argument is not a matrix; Expected-Two Matrices of same shape"))
         ((not (and-all (apply-to-all2 'eq (shape x) (shape y)))) (error "mplus: Given-Arguments are matrices of different shapes; Expected-Two Matrices of same shape"))
-        ((null? x) nil)
         (T (appendl (apply-to-all2 '+ (myfirst x) (myfirst y)) (mplus (tail x) (tail y))))
    )
 )
+
+
