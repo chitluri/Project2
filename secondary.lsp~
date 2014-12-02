@@ -36,14 +36,14 @@
 
 (defun vector? (x) 
   (cond ((null? x) T)
-        ((atom? x) (error "vector-all: Given-Argument is atom; Expected-Argument must be a non-empty list"))
+        ((atom? x) nil) ;; (error "vector-all: Given-Argument is atom; Expected-Argument must be a non-empty list"))
         (T (and-all (funcall 'apply-to-all 'integer? x)))
    )
 )
 
 
 (defun matrix? (x)
-  (cond ((null? x) (error "matrix? Given-Argument is nil; Expected-Argument must be a list of vectors"))
+  (cond ((null? x) nil)
         ((list? x) (and (and-all (funcall 'apply-to-all 'vector? x)) (equal-all (funcall 'apply-to-all 'length x))))
         (T nil)
    )
