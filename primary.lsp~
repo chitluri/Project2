@@ -43,7 +43,7 @@
 
 
 (defun matrix? (x)
-  (cond ((null? x) F)
+  (cond ((null? x) nil)
         ((list? x) (and (and-all (funcall 'apply-to-all 'vector? x)) (equal-all (funcall 'apply-to-all 'length x))))
         (T nil)
    )
@@ -72,5 +72,30 @@
         ((equal? n 1) (list (list 1)))
         ((not (> n 0)) (error "zero: argument must be a non-negative integer"))
         (T (appendr (apply-to-all 'reverse (apply-to-all1 'appendl '0 (reverse (ID (- n 1))))) (appendl '0 (reverse (myfirst (ID (- n 1)))))))
+   )
+)
+
+
+(defun transpose (x) 
+  (cond ((and (matrix? x) (eq 1 (length (myfirst x)))) (list (apply-to-all 'myfirst x)))
+        ((matrix? x) (appendl (apply-to-all 'myfirst x) (transpose (apply-to-all 'tail x))))
+        (T (error "transpose: Given Argument is not a matrix; Expected-Argument must be matrix"))
+   )
+)
+
+
+
+(defun dot (x y)
+  (cond ((and (and (vector? x) (vector? y)) (eq (length x) (length y))) (apply-to-all2 '* x y))    ;;((or (not (vector? x)) (not (vector? y))) (error "dot: Given Arguments are not vectors; Expected-Arguments must be vectors"))
+        (T (error "dot: Given-Arguments are not vectors of same length; Expected-Arguments must be vectors of same length"))
+   )
+)
+
+
+(defun mplus (x y)
+  (cond ((or (not (matrix? x)) (not (matrix? y))) (error "mplus: Given-Atleast one argument is not a matrix; Expected-Two Matrices of same shape"))
+        ((not (and-all (apply-to-all2 'eq (shape x) (shape y)))) (error "mplus: Given-Arguments are matrices of different shapes; Expected-Two Matrices of same shape"))
+        ((null? x) nil)
+        (T (appendl (apply-to-all2 '+ (myfirst x) (myfirst y)) (mplus (tail x) (tail y))))
    )
 )

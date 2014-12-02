@@ -82,3 +82,23 @@
         (T (error "transpose: Given Argument is not a matrix; Expected-Argument must be matrix"))
    )
 )
+
+
+
+(defun dot (x y)
+  (cond ((and (and (vector? x) (vector? y)) (eq (length x) (length y))) (apply-to-all2 '* x y))    ;;((or (not (vector? x)) (not (vector? y))) (error "dot: Given Arguments are not vectors; Expected-Arguments must be vectors"))
+        (T (error "dot: Given-Arguments are not vectors of same length; Expected-Arguments must be vectors of same length"))
+   )
+)
+
+
+
+(defun mplus (x y)
+  (cond ((null? x) nil)
+        ((or (not (matrix? x)) (not (matrix? y))) (error "mplus: Given-Atleast one argument is not a matrix; Expected-Two Matrices of same shape"))
+        ((not (and-all (apply-to-all2 'eq (shape x) (shape y)))) (error "mplus: Given-Arguments are matrices of different shapes; Expected-Two Matrices of same shape"))
+        (T (appendl (apply-to-all2 '+ (myfirst x) (myfirst y)) (mplus (tail x) (tail y))))
+   )
+)
+
+
