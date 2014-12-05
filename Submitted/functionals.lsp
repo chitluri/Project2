@@ -36,6 +36,7 @@
 (defun construction (x y)
 	(cond ((null? x) nil)
 		  ((atom? x) (error "construction: Given- First argument as an atom; Expected-First argument to be a list of functions"))
+		  ((null? (tail x)) (list (funcall (myfirst x) y)))
 		  (T (appendl (funcall (myfirst x) y) (construction (tail x) y)))
 	)
 )

@@ -13,6 +13,15 @@
 	(listp x)
 )
 
+(defun integer? (x) (integerp x))
+
+(defun zero? (x) (zerop x))
+
+(defun plus? (x) (plusp x))
+
+(defun minus? (x) (minusp x))
+
+(defun equal? (x y) (equal x y))
 
 
 (defun myfirst (x)
