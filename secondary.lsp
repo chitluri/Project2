@@ -29,8 +29,8 @@
 
 
 (defun square? (x) 
-  (cond ((not (matrix? x)) (error "square:Given-Argument is not a matrix; Expected-Argument must be a matrix"))
-        (T (equal-all (shape x)))
+  (cond ((matrix? x) (equal-all (shape x)))
+        (T NIL)
    )
 )
 

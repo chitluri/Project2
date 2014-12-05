@@ -1,17 +1,3 @@
-(defun integer? (x) (integerp x))
-
-(defun zero? (x) (zerop x))
-
-(defun plus? (x) (plusp x))
-
-(defun minus? (x) (minusp x))
-
-(defun equal? (x y) (equal x y))
-
-
-
-
-
 
 (defun vector? (x) 
   (cond ((null? x) T)
@@ -38,18 +24,18 @@
 
 
 (defun zero (n) 
-  (cond ((not (integer? n)) (error "zero: Given-Argument is not an intger; Expected-Argument must be an non-negative integer"))
+  (cond ((not (integer? n)) (error "zero: Given-Argument is not an intger; Expected-Argument must be a positive integer"))
         ((equal? n 1) (list (list 0)))
-        ((not (> n 0)) (error "zero: Given-Argument is not a positive integer; Expected-Argument must be a non-negative integer"))
+        ((not (> n 0)) (error "zero: Given-Argument is not a positive integer; Expected-Argument must be a positive integer"))
         (T (apply-to-all1 'appendl '0 (appendl (myfirst (zero (- n 1))) (zero (- n 1)))))
    )
 )
 
 
 (defun id (n) 
-  (cond ((not (integer? n)) (error "ID: Given-Argument is not an intger; Expected-Argument must be an non-negative integer"))
+  (cond ((not (integer? n)) (error "ID: Given-Argument is not an intger; Expected-Argument must be a positive integer"))
         ((equal? n 1) (list (list 1)))
-        ((not (> n 0)) (error "ID: Given-Argument is not an intger; Expected-Argument must be an non-negative integer"))
+        ((not (> n 0)) (error "ID: Given-Argument is not an intger; Expected-Argument must be a positive integer"))
         (T (appendr (apply-to-all 'reverse (apply-to-all1 'appendl '0 (reverse (ID (- n 1))))) (appendl '0 (reverse (myfirst (ID (- n 1)))))))
    )
 )
